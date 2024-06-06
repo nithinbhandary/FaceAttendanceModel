@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admindashboard.css') }}">
+    <title>Admin Dashboard</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>SSBAUP SCHOOL</h2>
+        </div>
+        <ul>
+            <li><a href="#" onclick="toggleForm('add-user-form')">Add User</a></li>
+            <li><a href="#" onclick="toggleForm('password-reset-form')">Password Reset</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <a href="/logout" class="logout-button">Logout</a>
+        </header>
+
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class="flashes">
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <div id="add-user-form" class="form-container">
+
+                <h2>Add User</h2>
+                <!-- Add User Form -->
+                <form action="{{ url_for('add_user') }}" method="post">
+                    <label for="new_username">New Username:</label>
+                    <input type="text" id="new_username" name="new_username" required><br>
+                    <label for="new_password">New Password:</label>
+                    <input type="password" id="new_password" name="new_password" required><br>
+                    <button type="submit">Add User</button>
+                </form>
+            </div>
+            <div id="password-reset-form" class="form-container">
+
+                <!-- Forget Password Form -->
+                <h2>Password Reset</h2>
+                <form action="{{ url_for('reset_password') }}" method="post">
+                    <label for="reset_username">Username:</label>
+                    <input type="text" id="reset_username" name="reset_username" required><br>
+                    <label for="reset_password">New Password:</label>
+                    <input type="password" id="reset_password" name="reset_password" required><br>
+                    <button type="submit">Reset Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(formId) {
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => {
+                if (form.id === formId) {
+                    form.style.display = 'block';
+                } else {
+                    form.style.display = 'none';
+                }
+            });
+
+            // Hide the other form
+            const otherFormId = (formId === 'add-user-form') ? 'password-reset-form' : 'add-user-form';
+            document.getElementById(otherFormId).style.display = 'none';
+        }
+
+
+
+
+
+    </script>
+</body>
+
+</html>

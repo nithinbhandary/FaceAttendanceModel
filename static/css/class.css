@@ -1,0 +1,16 @@
+.class-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.class-details {
+    display: none;
+    margin-top: 20px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 400px;
+}
